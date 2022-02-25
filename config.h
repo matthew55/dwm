@@ -106,10 +106,10 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,		XK_a,	   defaultgaps,	   {0} },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
 	{ MODKEY,                       XK_c,      killclient,     {0} },
-	{ MODKEY,			XK_t,	   setlayout,      {.v = &layouts[0]} }, /* tile */
-	{ MODKEY|ShiftMask,		XK_t,	   setlayout,	   {.v = &layouts[1]} }, /* bstack */
-	{ MODKEY,			XK_y,	   setlayout,	   {.v = &layouts[2]} }, /* spiral */
-	{ MODKEY|ShiftMask,		XK_y,	   setlayout,	   {.v = &layouts[3]} }, /* dwindle */
+	{ MODKEY,			XK_y,	   setlayout,      {.v = &layouts[0]} }, /* dwindle */
+	{ MODKEY|ShiftMask,		XK_y,	   setlayout,	   {.v = &layouts[1]} }, /* tile */
+	{ MODKEY,			XK_t,	   setlayout,	   {.v = &layouts[2]} }, /* tile */
+	{ MODKEY|ShiftMask,		XK_t,	   setlayout,	   {.v = &layouts[3]} }, /* bstack */
 	{ MODKEY,			XK_u,	   setlayout,	   {.v = &layouts[4]} }, /* deck */
 	{ MODKEY|ShiftMask,		XK_u,	   setlayout,	   {.v = &layouts[5]} }, /* monocle */
 	{ MODKEY,			XK_i,	   setlayout,	   {.v = &layouts[6]} }, /*centeredmaster */
