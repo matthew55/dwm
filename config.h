@@ -1,6 +1,6 @@
 /* See LICENSE file for copyright and license details. */
 
-//#define TERMINAL "urxvt" /* appearance */
+#define TERMINAL "urxvt" /* appearance */
 static const unsigned int borderpx  = 1;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const unsigned int gappih    = 20;       /* horiz inner gap between windows */
@@ -100,7 +100,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
 	{ MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
 	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
-	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.0
+	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.0} },
 	{ MODKEY,                       XK_z,      incrgaps,       {.i = +3 } },
 	{ MODKEY|ShiftMask,             XK_z,      incrgaps,       {.i = -3 } },
 	{ MODKEY,			XK_a,	   togglegaps,     {0} },
@@ -139,6 +139,7 @@ static Key keys[] = {
 	TAGKEYS(                        XK_9,                      8)
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
         { MODKEY,                       XK_q,      spawn,          SHCMD("systemctl hibernate") },
+        { MODKEY,                       XK_Delete, spawn,          SHCMD("shutdown now") },
 };
 
 /* button definitions */
