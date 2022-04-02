@@ -91,7 +91,7 @@ static Key keys[] = {
         { MODKEY|ShiftMask,             XK_r,      spawn,          SHCMD(TERMINAL " -e htop") },
         { MODKEY|ControlMask|ShiftMask, XK_r,      spawn,          SHCMD(TERMINAL " -e ranger --choosedir=$(pwd)") },
         { MODKEY,                       XK_o,      spawn,          SHCMD(TERMINAL " -e yay -Syyu") },
-        { MODKEY,                       XK_o,      spawn,          SHCMD("idea") }, // Intellij
+        { MODKEY|ShiftMask,                       XK_o,      spawn,          SHCMD("idea") }, // Intellij
         { MODKEY,                       XK_e,      spawn,          SHCMD("warp-cli enable-always-on") },
         { MODKEY|ShiftMask,             XK_e,      spawn,          SHCMD("warp-cli disable-always-on") },
 	{ MODKEY|ShiftMask,             XK_b,      togglebar,      {0} },
