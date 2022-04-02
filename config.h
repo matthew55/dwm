@@ -1,8 +1,6 @@
 /* See LICENSE file for copyright and license details. */
 
-#define TERMINAL "urxvt"
-
-/* appearance */
+//#define TERMINAL "urxvt" /* appearance */
 static const unsigned int borderpx  = 1;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const unsigned int gappih    = 20;       /* horiz inner gap between windows */
@@ -91,6 +89,9 @@ static Key keys[] = {
         { MODKEY|ShiftMask,		XK_d,	   spawn,	   SHCMD("discord") },
         { MODKEY,                       XK_r,      spawn,          SHCMD(TERMINAL " -e ranger") },
         { MODKEY|ShiftMask,             XK_r,      spawn,          SHCMD(TERMINAL " -e htop") },
+        { MODKEY|ControlMask|ShiftMask, XK_r,      spawn,          SHCMD(TERMINAL " -e ranger --choosedir=$(pwd)") },
+        { MODKEY,                       XK_o,      spawn,          SHCMD(TERMINAL " -e yay -Syyu") },
+        { MODKEY,                       XK_o,      spawn,          SHCMD("idea") }, // Intellij
         { MODKEY,                       XK_e,      spawn,          SHCMD("warp-cli enable-always-on") },
         { MODKEY|ShiftMask,             XK_e,      spawn,          SHCMD("warp-cli disable-always-on") },
 	{ MODKEY|ShiftMask,             XK_b,      togglebar,      {0} },
@@ -99,9 +100,9 @@ static Key keys[] = {
 	{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
 	{ MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
 	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
-	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
+	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.0
 	{ MODKEY,                       XK_z,      incrgaps,       {.i = +3 } },
-	{ MODKEY|ShiftMask,             XK_x,      incrgaps,       {.i = -3 } },
+	{ MODKEY|ShiftMask,             XK_z,      incrgaps,       {.i = -3 } },
 	{ MODKEY,			XK_a,	   togglegaps,     {0} },
 	{ MODKEY|ShiftMask,		XK_a,	   defaultgaps,	   {0} },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
@@ -137,21 +138,22 @@ static Key keys[] = {
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
+        { MODKEY,                       XK_q,      spawn,          SHCMD("systemctl hibernate") },
 };
 
 /* button definitions */
 /* click can be ClkTagBar, ClkLtSymbol, ClkStatusText, ClkWinTitle, ClkClientWin, or ClkRootWin */
 static Button buttons[] = {
 	/* click                event mask      button          function        argument */
-        //#ifndef __OpenBSD__
-	//{ ClkWinTitle,          0,              Button2,        zoom,           {0} },
-	//{ ClkStatusText,        0,              Button1,        sigdwmblocks,   {.i = 1} },
-	//{ ClkStatusText,        0,              Button2,        sigdwmblocks,   {.i = 2} },
-	//{ ClkStatusText,        0,              Button3,        sigdwmblocks,   {.i = 3} },
-	//{ ClkStatusText,        0,              Button4,        sigdwmblocks,   {.i = 4} },
-	//{ ClkStatusText,        0,              Button5,        sigdwmblocks,   {.i = 5} },
-	//{ ClkStatusText,        ShiftMask,      Button1,        sigdwmblocks,   {.i = 6} },
-//#endif
+#ifndef __OpenBSD__
+	{ ClkWinTitle,          0,              Button2,        zoom,           {0} },
+	{ ClkStatusText,        0,              Button1,        sigdwmblocks,   {.i = 1} },
+	{ ClkStatusText,        0,              Button2,        sigdwmblocks,   {.i = 2} },
+	{ ClkStatusText,        0,              Button3,        sigdwmblocks,   {.i = 3} },
+	{ ClkStatusText,        0,              Button4,        sigdwmblocks,   {.i = 4} },
+	{ ClkStatusText,        0,              Button5,        sigdwmblocks,   {.i = 5} },
+	{ ClkStatusText,        ShiftMask,      Button1,        sigdwmblocks,   {.i = 6} },
+#endif
 	{ ClkStatusText,        ShiftMask,      Button3,        spawn,          SHCMD(TERMINAL " -e vim ~/.config/dwmblocks/config.h") },
 	{ ClkLtSymbol,          0,              Button1,        setlayout,      {0} },
 	{ ClkLtSymbol,          0,              Button3,        setlayout,      {.v = &layouts[2]} },
