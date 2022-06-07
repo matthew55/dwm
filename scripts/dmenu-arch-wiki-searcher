@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+# Searches the Arch Wiki and Artix Wiki for articles and opens them in a browser.
+# Date created: June 4, 2022
+
+# Artix Docs: /usr/share/doc/artix
+# Arch Docs: /usr/share/doc/arch-wiki/html/en
+
+artix_path="/usr/share/doc/artix/"
+arch_path="/usr/share/doc/arch-wiki/html/en/"
+
+main() {
+    choice=$(find $arch_path -iname *.html |
+    cut -d "/" -f8- |
+    sed -e "s/.html//g" -e "s/_/ /g" |
+    sort |
+    dmenu -i -l 20 -p "Which wiki?") || exit 1
+
+    if [ "$choice" ]; then
+        choice_path=$(echo ${arch_path}${choice}.html | sed "s/ /_/g")
+        $BROWSER $choice_path
+    else
+        echo "Program Terminated." && exit 0
+    fi
+}
+
+main
+

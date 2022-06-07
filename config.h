@@ -11,12 +11,6 @@ static       int smartgaps          = 0;        /* 1 means no outer gap when the
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const char *fonts[]          = { "monospace:size=10", "NotoColorEmoji:pixelsize=10:antialias=true:autohint=true" };
-//static const char col_gray1[]       = "#222222";
-//static const char col_gray2[]       = "#444444";
-//static const char col_gray3[]       = "#bbbbbb";
-//static const char col_gray4[]       = "#eeeeee";
-//static const char col_cyan[]        = "#005577";
-//static const char col_urgborder[]   = "#ff0000";
 #include "/home/matthew/.cache/wal/colors-wal-dwm.h"
 
 /* tagging */
@@ -65,6 +59,14 @@ static const Layout layouts[] = {
 	{ MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
 	{ MODKEY|ShiftMask,             KEY,      tag,            {.ui = 1 << TAG} }, \
 	{ MODKEY|ControlMask|ShiftMask, KEY,      toggletag,      {.ui = 1 << TAG} },
+#define STACKKEYS(MOD,ACTION) \
+	{ MOD, XK_j,     ACTION##stack, {.i = INC(+1) } }, \
+	{ MOD, XK_k,     ACTION##stack, {.i = INC(-1) } }, \
+	{ MOD, XK_grave, ACTION##stack, {.i = PREVSEL } }, \
+	{ MOD, XK_q,     ACTION##stack, {.i = 0 } }, \
+	{ MOD, XK_a,     ACTION##stack, {.i = 1 } }, \
+	{ MOD, XK_z,     ACTION##stack, {.i = 2 } }, \
+	{ MOD, XK_x,     ACTION##stack, {.i = -1 } },
 
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
@@ -77,7 +79,9 @@ static const char *termcmd[]  = { TERMINAL, NULL };
 static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_p,      spawn,          SHCMD("dmenu_run") },
+	{ MODKEY|ShiftMask,             XK_p,      spawn,          SHCMD("dmenu-arch-wiki-searcher") },
 	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
+
         { MODKEY,                       XK_w,      spawn,          SHCMD("$BROWSER") },
         { MODKEY|ShiftMask,		XK_s,	   spawn,	   SHCMD("steam") },
         { MODKEY|ShiftMask,		XK_d,	   spawn,	   SHCMD("discord") },
@@ -88,9 +92,10 @@ static Key keys[] = {
         { MODKEY|ShiftMask,             XK_o,      spawn,          SHCMD("idea") }, // Intellij
         { MODKEY,                       XK_e,      spawn,          SHCMD("warp-cli enable-always-on") },
         { MODKEY|ShiftMask,             XK_e,      spawn,          SHCMD("warp-cli disable-always-on") },
+
 	{ MODKEY|ShiftMask,             XK_b,      togglebar,      {0} },
-	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
-	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
+	STACKKEYS(MODKEY,                          focus)
+	STACKKEYS(MODKEY|ShiftMask,                push)
 	{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
 	{ MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
 	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
@@ -101,6 +106,7 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,		XK_a,	   defaultgaps,	   {0} },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
 	{ MODKEY,                       XK_c,      killclient,     {0} },
+
 	{ MODKEY,			XK_y,	   setlayout,      {.v = &layouts[0]} }, /* dwindle */
 	{ MODKEY|ShiftMask,		XK_y,	   setlayout,	   {.v = &layouts[1]} }, /* tile */
 	{ MODKEY,			XK_t,	   setlayout,	   {.v = &layouts[2]} }, /* tile */
@@ -110,6 +116,7 @@ static Key keys[] = {
 	{ MODKEY,			XK_i,	   setlayout,	   {.v = &layouts[6]} }, /*centeredmaster */
 	{ MODKEY|ShiftMask,		XK_i,	   setlayout,	   {.v = &layouts[7]} }, /* centeredfloatingmaster */	
 	{ MODKEY|ShiftMask,		XK_f,	   setlayout,	   {.v = &layouts[8]} }, /* fullfloating */	
+
 	{ MODKEY,			XK_f,	   togglefullscr,  {0} },
 	{ MODKEY,                       XK_space,  zoom,           {0} },
         { MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
@@ -131,9 +138,14 @@ static Key keys[] = {
 	TAGKEYS(                        XK_7,                      6)
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
+
+        { MODKEY,                       XK_F11,     spawn,          SHCMD("dmenu-mount") }, // Mount Drives
+        { MODKEY|ShiftMask,             XK_F11,     spawn,          SHCMD("dmenu-umount") }, // Unmount Drives
+        { MODKEY,                       XK_F12,     spawn,          SHCMD("pulsemixer") }, // Volume
+        { MODKEY,                       XK_Print,  spawn,          SHCMD("deepin-screenshot") }, // Screenshots
+
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
 	{ MODKEY|ControlMask|ShiftMask, XK_q,      quit,           {1} }, 
-        //{ MODKEY,                       XK_q,      spawn,          SHCMD("systemctl hibernate") },
         { MODKEY,                       XK_Delete, spawn,          SHCMD("sudo poweroff") },
         { MODKEY|ShiftMask,             XK_Delete, spawn,          SHCMD("sudo reboot") },
 };
