@@ -15,5 +15,5 @@ choice_path=$config$choice
 if [ -d "$choice_path" ]; then
     $TERMINAL -e $filemanager "$choice_path"
 else 
-    $EDITOR $choice_path
+    $TERMINAL -e $EDITOR $choice_path
 fi
