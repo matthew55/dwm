@@ -139,8 +139,10 @@ static Key keys[] = {
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
 
+        { MODKEY,                       XK_F10,     spawn,          SHCMD("dmenu-config-dir") }, // Mount Drives
         { MODKEY,                       XK_F11,     spawn,          SHCMD("dmenu-mount") }, // Mount Drives
         { MODKEY|ShiftMask,             XK_F11,     spawn,          SHCMD("dmenu-umount") }, // Unmount Drives
+        { MODKEY|ShiftMask|ControlMask, XK_F11,     spawn,          SHCMD("dmenu-unicode") }, // Unmount Drives
         { MODKEY,                       XK_F12,     spawn,          SHCMD("pulsemixer") }, // Volume
         { MODKEY,                       XK_Print,  spawn,          SHCMD("deepin-screenshot") }, // Screenshots
 
