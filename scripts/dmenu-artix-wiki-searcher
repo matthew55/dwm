@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+# Searches the Artix Wiki for articles and opens them in a browser.
+# Date created: June 8, 2022
+
+# Artix Docs: /usr/share/doc/artix/
+
+artix_path="/usr/share/doc/artix/"
+
+choice=$(find $artix_path -iname *.pdf |
+cut -d "/" -f6- |
+sed -e "s/.pdf//g" -e "s/_/ /g" |
+sort |
+dmenu -i -l 20 -p "Which wiki?") || exit 1
+
+if [ "$choice" ]; then
+    choice_path=$(echo ${artix_path}${choice}.pdf | sed "s/ /_/g")
+    echo $choice_path
+    zathura $choice_path
+else
+    echo "Program Terminated." && exit 0
+fi
+
