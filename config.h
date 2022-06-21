@@ -10,7 +10,7 @@ static const unsigned int gappov    = 30;       /* vert outer gap between window
 static       int smartgaps          = 0;        /* 1 means no outer gap when there is only one window */
 static int showbar            = 1;        /* 0 means no bar */
 static int topbar             = 1;        /* 0 means bottom bar */
-static char *fonts[]            = { "monospace:size=10", "NotoColorEmoji:pixelsize=10:antialias=true:autohint=true" };
+static char *fonts[]            = { "monospace:size=10", "NotoColorEmoji:pixelsize=10:antialias=true:autohint=true", "Unifont::pixelsize=10:antialias=true:autohint=true" };
 static char normbgcolor[]           = "#222222";
 static char normbordercolor[]       = "#444444";
 static char normfgcolor[]           = "#bbbbbb";
@@ -85,25 +85,6 @@ static const Layout layouts[] = {
 
 /* commands */
 static const char *termcmd[]  = { TERMINAL, NULL };
- 
-/*
- * Xresources preferences to load at startup
- */
-// ResourcePref resources[] = {
-//        { "normbgcolor",        STRING,  &normbgcolor },
-//        { "normbordercolor",    STRING,  &normbordercolor },
-//        { "normfgcolor",        STRING,  &normfgcolor },
-//        { "selbgcolor",         STRING,  &selbgcolor },
-//        { "selbordercolor",     STRING,  &selbordercolor },
-//        { "selfgcolor",         STRING,  &selfgcolor },
-//        { "borderpx",           INTEGER, &borderpx },
-//        { "snap",               INTEGER, &snap },
-//        { "showbar",            INTEGER, &showbar },
-//        { "topbar",             INTEGER, &topbar },
-//        { "nmaster",            INTEGER, &nmaster },
-//        { "resizehints",        INTEGER, &resizehints },
-//        { "mfact",              FLOAT,   &mfact },
-// };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -170,12 +151,12 @@ static Key keys[] = {
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
 
-        { MODKEY,                       XK_F10,     spawn,         SHCMD("dmenu-config-dir") }, // Mount Drives
-        { MODKEY|ShiftMask,             XK_F10,     spawn,         SHCMD("dmenu-wallpapers") }, // Mount Drives
-        { MODKEY,                       XK_F11,     spawn,         SHCMD("dmenu-mount") }, // Mount Drives
-        { MODKEY|ShiftMask,             XK_F11,     spawn,         SHCMD("dmenu-umount") }, // Unmount Drives
-        { MODKEY|ShiftMask|ControlMask, XK_F11,     spawn,         SHCMD("dmenu-unicode") }, // Unmount Drives
-        { MODKEY,                       XK_F12,     spawn,         SHCMD(TERMINAL " -e pulsemixer") }, // Volume
+        { MODKEY,                       XK_F10,    spawn,         SHCMD("dmenu-config-dir") }, // Mount Drives
+        { MODKEY|ShiftMask,             XK_F10,    spawn,         SHCMD("dmenu-wallpapers") }, // Mount Drives
+        { MODKEY,                       XK_F11,    spawn,         SHCMD("dmenu-mount") }, // Mount Drives
+        { MODKEY|ShiftMask,             XK_F11,    spawn,         SHCMD("dmenu-umount") }, // Unmount Drives
+        { MODKEY|ShiftMask|ControlMask, XK_F11,    spawn,         SHCMD("dmenu-unicode") }, // Unmount Drives
+        { MODKEY,                       XK_F12,    spawn,         SHCMD(TERMINAL " -e pulsemixer") }, // Volume
         { MODKEY,                       XK_Print,  spawn,          SHCMD("deepin-screenshot") }, // Screenshots
 
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
