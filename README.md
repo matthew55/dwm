@@ -10,3 +10,6 @@
 - New layouts: fibonacci, dwindle, and more.
 - [Stacker](https://dwm.suckless.org/patches/stacker/): Move windows up the stack manually (`super-K/J`).
 - Dmenu scripts: found in `./scripts/`
+
+## Link Pywal to Xresources
+- Add `xrdb ~/.Xresources && xrdb -merge ~/.cache/wal/colors.Xresources` to your `.xinitrc` file.
