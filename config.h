@@ -10,7 +10,12 @@ static const unsigned int gappov    = 30;       /* vert outer gap between window
 static       int smartgaps          = 0;        /* 1 means no outer gap when there is only one window */
 static int showbar            = 1;        /* 0 means no bar */
 static int topbar             = 1;        /* 0 means bottom bar */
-static char *fonts[]            = { "monospace:size=10", "NotoColorEmoji:pixelsize=10:antialias=true:autohint=true", "Unifont::pixelsize=10:antialias=true:autohint=true" };
+static char *fonts[]            = { 
+    "monospace:size=10", 
+    "NotoColorEmoji:pixelsize=10:antialias=true:autohint=true",  
+    "FontAwesome:pixelsize=10",
+    "Unifont:size=10" 
+};
 static char normbgcolor[]           = "#222222";
 static char normbordercolor[]       = "#444444";
 static char normfgcolor[]           = "#bbbbbb";
@@ -33,6 +38,7 @@ static const Rule rules[] = {
 	 */
 	/* class      instance    title       tags mask     isfloating   monitor */
 	{ "Gimp",     NULL,       NULL,       0,            1,           -1 },
+	{ "Sxiv",     "sxiv",     NULL,       0,            1,           -1 },
 	{ "Firefox",  NULL,       NULL,       1 << 8,       0,           -1 },
 };
 
@@ -97,12 +103,12 @@ static Key keys[] = {
         { MODKEY|ShiftMask,             XK_w,      spawn,          SHCMD("$BROWSER --profile ~/.mozilla/firefox/51ufyvxx.Normie") },
         { MODKEY|ShiftMask,		XK_s,	   spawn,	   SHCMD("steam") },
         { MODKEY|ShiftMask,		XK_d,	   spawn,	   SHCMD("discord") },
+        { MODKEY|ShiftMask|ControlMask,	XK_o,	   spawn,	   SHCMD("idea") },
         { MODKEY,                       XK_r,      spawn,          SHCMD(TERMINAL " -e ranger") },
         { MODKEY|ShiftMask,             XK_r,      spawn,          SHCMD(TERMINAL " -e htop") },
-        { MODKEY|ControlMask|ShiftMask, XK_r,      spawn,          SHCMD(TERMINAL " -e ranger --choosedir=$(pwd)") },
         { MODKEY,                       XK_o,      spawn,          SHCMD(TERMINAL " -e yay -Syyu") },
-        { MODKEY|ShiftMask,             XK_o,      spawn,          SHCMD("idea") }, // Intellij
-        { MODKEY,                       XK_e,      spawn,          SHCMD("warp-cli enable-always-on") },
+        { MODKEY|ShiftMask,             XK_o,      spawn,          SHCMD(TERMINAL " -e ping 8.8.8.8") },
+        { MODKEY,                       XK_e,      spawn,          SHCMD("warp-cli enable-always-on") }, 
         { MODKEY|ShiftMask,             XK_e,      spawn,          SHCMD("warp-cli disable-always-on") },
 
 	{ MODKEY|ShiftMask,             XK_b,      togglebar,      {0} },
@@ -151,13 +157,15 @@ static Key keys[] = {
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
 
-        { MODKEY,                       XK_F10,    spawn,         SHCMD("dmenu-config-dir") }, // Mount Drives
-        { MODKEY|ShiftMask,             XK_F10,    spawn,         SHCMD("dmenu-wallpapers") }, // Mount Drives
+        { MODKEY,                       XK_F9,    spawn,          SHCMD("wall-d -p -f -d ~/Pictures/desktop-backgrounds") }, // Change wallpapers
+        { MODKEY|ShiftMask,             XK_F9,    spawn,          SHCMD("wall-d -p -f -o -d ~/Pictures/desktop-backgrounds") }, // Change wallpapers with options
+        { MODKEY,                       XK_F10,    spawn,         SHCMD("dmenu-config-dir") }, // Open config dirs
+        { MODKEY|ShiftMask,             XK_F10,    spawn,         SHCMD(TERMINAL " -e dmenu-picture-dir") }, // Open config dirs
         { MODKEY,                       XK_F11,    spawn,         SHCMD("dmenu-mount") }, // Mount Drives
         { MODKEY|ShiftMask,             XK_F11,    spawn,         SHCMD("dmenu-umount") }, // Unmount Drives
-        { MODKEY|ShiftMask|ControlMask, XK_F11,    spawn,         SHCMD("dmenu-unicode") }, // Unmount Drives
+        { MODKEY|ControlMask|ShiftMask, XK_F11,    spawn,         SHCMD("dmenu-unicode") }, // Copy unicode characters
         { MODKEY,                       XK_F12,    spawn,         SHCMD(TERMINAL " -e pulsemixer") }, // Volume
-        { MODKEY,                       XK_Print,  spawn,          SHCMD("deepin-screenshot") }, // Screenshots
+        { MODKEY,                       XK_Print,  spawn,         SHCMD("deepin-screenshot") }, // Screenshots
 
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
 	{ MODKEY|ControlMask|ShiftMask, XK_q,      quit,           {1} }, 
