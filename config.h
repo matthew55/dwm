@@ -1,21 +1,23 @@
 /* See LICENSE file for copyright and license details. */
 
-#define TERMINAL "st" /* appearance */
-static unsigned int borderpx  = 2;        /* border pixel of windows */
-static unsigned int snap      = 32;       /* snap pixel */
+#define TERMINAL "st"
+/* appearance */
+static const unsigned int borderpx  = 2;        /* border pixel of windows */
+static const unsigned int snap      = 32;       /* snap pixel */
 static const unsigned int gappih    = 20;       /* horiz inner gap between windows */
 static const unsigned int gappiv    = 10;       /* vert inner gap between windows */
 static const unsigned int gappoh    = 10;       /* horiz outer gap between windows and screen edge */
 static const unsigned int gappov    = 30;       /* vert outer gap between windows and screen edge */
 static       int smartgaps          = 0;        /* 1 means no outer gap when there is only one window */
-static int showbar            = 1;        /* 0 means no bar */
-static int topbar             = 1;        /* 0 means bottom bar */
-static char *fonts[]            = { 
+static const int showbar            = 1;        /* 0 means no bar */
+static const int topbar             = 1;        /* 0 means bottom bar */
+static char *fonts[]                = { 
     "monospace:size=10", 
     "NotoColorEmoji:pixelsize=10:antialias=true:autohint=true",  
     "FontAwesome:pixelsize=10",
     "Unifont:size=10" 
 };
+static const char dmenufont[]       = "monospace:size=10";
 static char normbgcolor[]           = "#222222";
 static char normbordercolor[]       = "#444444";
 static char normfgcolor[]           = "#bbbbbb";
@@ -26,7 +28,7 @@ static char *colors[][3] = {
        /*               fg           bg           border   */
        [SchemeNorm] = { normfgcolor, normbgcolor, normbordercolor },
        [SchemeSel]  = { selfgcolor,  selbgcolor,  selbordercolor  },
- };
+};
 
 /* tagging */
 static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
@@ -43,9 +45,9 @@ static const Rule rules[] = {
 };
 
 /* layout(s) */
-static float mfact     = 0.55; /* factor of master area size [0.05..0.95] */
-static int nmaster     = 1;    /* number of clients in master area */
-static int resizehints = 1;    /* 1 means respect size hints in tiled resizals */
+static const float mfact     = 0.55; /* factor of master area size [0.05..0.95] */
+static const int nmaster     = 1;    /* number of clients in master area */
+static const int resizehints = 1;    /* 1 means respect size hints in tiled resizals */
 static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen window */
 
 #define FORCE_VSPLIT 1  /* nrowgrid layout: force two clients to always split vertically */
@@ -53,20 +55,20 @@ static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen win
 
 static const Layout layouts[] = {
 	/* symbol     arrange function */
-	{ "[\\]",	dwindle },		/* Decreasing in size right and leftward */
-	{ "[@]",	spiral },		/* Fibonacci spiral */
-
-	{ "[]=",	tile },			/* Default: Master on left, slaves on right */
-	{ "TTT",	bstack },		/* Master on top, slaves on bottom */
-
-	{ "[D]",	deck },			/* Master on left, slaves in monocle-like mode on right */
-	{ "[M]",	monocle },		/* All windows on top of eachother */
-
+        /* first entry is default */
+	{ "[]=",	tile },			        /* Default: Master on left, slaves on right */
+	{ "[M]",	monocle },		        /* All windows on top of eachother */
+	{ "[@]",	spiral },		        /* Fibonacci spiral */
+	{ "[\\]",	dwindle },		        /* Decreasing in size right and leftward */
+	{ "H[]",	deck },			        /* Master on left, slaves in monocle-like mode on right */
+	{ "TTT",        bstack },		        /* Master on top, slaves on bottom */
+	{ "HHH",        gaplessgrid },                  /* Master on top left, slaves follow verticle grid */
+	{ "###",        nrowgrid },                     /* Same but horizontal grid */
 	{ "|M|",	centeredmaster },		/* Master in middle, slaves on sides */
 	{ ">M>",	centeredfloatingmaster },	/* Same but master floats */
-
-	{ "><>",	NULL },			/* no layout function means floating behavior */
-	{ NULL,		NULL },};
+	{ "><>",      NULL },                           /* no layout function means floating behavior */
+	{ NULL,       NULL },                           /* Needed for cycling to work */
+};
 
 /* key definitions */
 #define MODKEY Mod4Mask
@@ -78,11 +80,11 @@ static const Layout layouts[] = {
 #define STACKKEYS(MOD,ACTION) \
 	{ MOD, XK_j,     ACTION##stack, {.i = INC(+1) } }, \
 	{ MOD, XK_k,     ACTION##stack, {.i = INC(-1) } }, \
-	{ MOD, XK_grave, ACTION##stack, {.i = PREVSEL } }, \
-	{ MOD, XK_q,     ACTION##stack, {.i = 0 } }, \
+	{ MOD, XK_grave, ACTION##stack, {.i = PREVSEL } }, 
+	/*{ MOD, XK_q,     ACTION##stack, {.i = 0 } }, \
 	{ MOD, XK_a,     ACTION##stack, {.i = 1 } }, \
 	{ MOD, XK_z,     ACTION##stack, {.i = 2 } }, \
-	{ MOD, XK_x,     ACTION##stack, {.i = -1 } },
+	{ MOD, XK_x,     ACTION##stack, {.i = -1 } },*/
 
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
@@ -96,22 +98,19 @@ static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_p,      spawn,          SHCMD("dmenu_run") },
 	{ MODKEY|ShiftMask,             XK_p,      spawn,          SHCMD("dmenu-arch-wiki-searcher") },
-	{ MODKEY|ControlMask|ShiftMask, XK_p,      spawn,          SHCMD("dmenu-artix-wiki-searcher") },
 	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
 
         { MODKEY,                       XK_w,      spawn,          SHCMD("$BROWSER") },
-        { MODKEY|ShiftMask,             XK_w,      spawn,          SHCMD("$BROWSER --profile ~/.mozilla/firefox/51ufyvxx.Normie") },
+        { MODKEY|ShiftMask,             XK_w,      spawn,          SHCMD("$BROWSER --profile ~/.mozilla/firefox/hz1axv5p.Normie") },
         { MODKEY|ShiftMask,		XK_s,	   spawn,	   SHCMD("steam") },
         { MODKEY|ShiftMask,		XK_d,	   spawn,	   SHCMD("discord") },
         { MODKEY|ShiftMask|ControlMask,	XK_o,	   spawn,	   SHCMD("idea") },
         { MODKEY,                       XK_r,      spawn,          SHCMD(TERMINAL " -e ranger") },
         { MODKEY|ShiftMask,             XK_r,      spawn,          SHCMD(TERMINAL " -e htop") },
         { MODKEY,                       XK_o,      spawn,          SHCMD(TERMINAL " -e yay -Syyu") },
-        { MODKEY|ShiftMask,             XK_o,      spawn,          SHCMD(TERMINAL " -e ping 8.8.8.8") },
-        { MODKEY,                       XK_e,      spawn,          SHCMD("warp-cli enable-always-on") }, 
-        { MODKEY|ShiftMask,             XK_e,      spawn,          SHCMD("warp-cli disable-always-on") },
+        { MODKEY|ShiftMask,             XK_o,      spawn,          SHCMD(TERMINAL " -e ping 1.1.1.1") },
 
-	{ MODKEY|ShiftMask,             XK_b,      togglebar,      {0} },
+        { MODKEY|ShiftMask,             XK_b,      togglebar,      {0} },
 	STACKKEYS(MODKEY,                          focus)
 	STACKKEYS(MODKEY|ShiftMask,                push)
 	{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
@@ -125,26 +124,21 @@ static Key keys[] = {
 	{ MODKEY,                       XK_Tab,    view,           {0} },
 	{ MODKEY,                       XK_c,      killclient,     {0} },
 
-	{ MODKEY,			XK_y,	   setlayout,      {.v = &layouts[0]} }, /* dwindle */
-	{ MODKEY|ShiftMask,		XK_y,	   setlayout,	   {.v = &layouts[1]} }, /* tile */
-	{ MODKEY,			XK_t,	   setlayout,	   {.v = &layouts[2]} }, /* tile */
-	{ MODKEY|ShiftMask,		XK_t,	   setlayout,	   {.v = &layouts[3]} }, /* bstack */
-	{ MODKEY,			XK_u,	   setlayout,	   {.v = &layouts[4]} }, /* deck */
-	{ MODKEY|ShiftMask,		XK_u,	   setlayout,	   {.v = &layouts[5]} }, /* monocle */
-	{ MODKEY,			XK_i,	   setlayout,	   {.v = &layouts[6]} }, /*centeredmaster */
-	{ MODKEY|ShiftMask,		XK_i,	   setlayout,	   {.v = &layouts[7]} }, /* centeredfloatingmaster */	
-	{ MODKEY|ShiftMask,		XK_f,	   setlayout,	   {.v = &layouts[8]} }, /* fullfloating */	
+	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
+	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
+	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
 
-	{ MODKEY,			XK_f,	   togglefullscr,  {0} },
 	{ MODKEY,                       XK_space,  zoom,           {0} },
-        { MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
-	{ MODKEY,			XK_s,	   togglesticky,   {0} },
+	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
+	{ MODKEY,                       XK_f,      togglefullscr,  {0} },
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
 	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
 	{ MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },
 	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
+	{ MODKEY|ControlMask,		XK_comma,  cyclelayout,    {.i = -1 } },
+	{ MODKEY|ControlMask,           XK_period, cyclelayout,    {.i = +1 } },
 	{ MODKEY,                       XK_n,      shiftview,      {.i = +1 } },
 	{ MODKEY,                       XK_b,      shiftview,      {.i = -1 } },
 	TAGKEYS(                        XK_1,                      0)
@@ -157,15 +151,15 @@ static Key keys[] = {
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
 
-        { MODKEY,                       XK_F9,    spawn,          SHCMD("wall-d -p -f -d ~/Pictures/desktop-backgrounds") }, // Change wallpapers
-        { MODKEY|ShiftMask,             XK_F9,    spawn,          SHCMD("wall-d -p -f -o -d ~/Pictures/desktop-backgrounds") }, // Change wallpapers with options
-        { MODKEY,                       XK_F10,    spawn,         SHCMD("dmenu-config-dir") }, // Open config dirs
-        { MODKEY|ShiftMask,             XK_F10,    spawn,         SHCMD(TERMINAL " -e dmenu-picture-dir") }, // Open config dirs
-        { MODKEY,                       XK_F11,    spawn,         SHCMD("dmenu-mount") }, // Mount Drives
-        { MODKEY|ShiftMask,             XK_F11,    spawn,         SHCMD("dmenu-umount") }, // Unmount Drives
-        { MODKEY|ControlMask|ShiftMask, XK_F11,    spawn,         SHCMD("dmenu-unicode") }, // Copy unicode characters
-        { MODKEY,                       XK_F12,    spawn,         SHCMD(TERMINAL " -e pulsemixer") }, // Volume
-        { MODKEY,                       XK_Print,  spawn,         SHCMD("deepin-screenshot") }, // Screenshots
+        { MODKEY,                       XK_F9,     spawn,          SHCMD("wall-d -p -f -d ~/Pictures/desktop-backgrounds") }, // Change wallpapers
+        { MODKEY|ShiftMask,             XK_F9,     spawn,          SHCMD("wall-d -p -f -o -d ~/Pictures/desktop-backgrounds") }, // Change wallpapers with options
+        { MODKEY,                       XK_F10,    spawn,          SHCMD("dmenu-config-dir") }, // Open config dirs
+        { MODKEY|ShiftMask,             XK_F10,    spawn,          SHCMD(TERMINAL " -e dmenu-picture-dir") }, // Open config dirs
+        { MODKEY,                       XK_F11,    spawn,          SHCMD("dmenu-mount") }, // Mount Drives
+        { MODKEY|ShiftMask,             XK_F11,    spawn,          SHCMD("dmenu-umount") }, // Unmount Drives
+        { MODKEY|ControlMask|ShiftMask, XK_F11,    spawn,          SHCMD("dmenu-unicode") }, // Copy unicode characters
+        { MODKEY,                       XK_F12,    spawn,          SHCMD(TERMINAL " -e pulsemixer") }, // Volume
+        { MODKEY,                       XK_Print,  spawn,          SHCMD("deepin-screenshot") }, // Screenshots
 
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
 	{ MODKEY|ControlMask|ShiftMask, XK_q,      quit,           {1} }, 
@@ -177,16 +171,6 @@ static Key keys[] = {
 /* click can be ClkTagBar, ClkLtSymbol, ClkStatusText, ClkWinTitle, ClkClientWin, or ClkRootWin */
 static Button buttons[] = {
 	/* click                event mask      button          function        argument */
-#ifndef __OpenBSD__
-	{ ClkWinTitle,          0,              Button2,        zoom,           {0} },
-	{ ClkStatusText,        0,              Button1,        sigdwmblocks,   {.i = 1} },
-	{ ClkStatusText,        0,              Button2,        sigdwmblocks,   {.i = 2} },
-	{ ClkStatusText,        0,              Button3,        sigdwmblocks,   {.i = 3} },
-	{ ClkStatusText,        0,              Button4,        sigdwmblocks,   {.i = 4} },
-	{ ClkStatusText,        0,              Button5,        sigdwmblocks,   {.i = 5} },
-	{ ClkStatusText,        ShiftMask,      Button1,        sigdwmblocks,   {.i = 6} },
-#endif
-	{ ClkStatusText,        ShiftMask,      Button3,        spawn,          SHCMD(TERMINAL " -e vim ~/.config/dwmblocks/config.h") },
 	{ ClkLtSymbol,          0,              Button1,        setlayout,      {0} },
 	{ ClkLtSymbol,          0,              Button3,        setlayout,      {.v = &layouts[2]} },
 	{ ClkWinTitle,          0,              Button2,        zoom,           {0} },
@@ -208,5 +192,4 @@ static Button buttons[] = {
 static Signal signals[] = {
 	/* signum       function        argument  */
 	{ 1,            xrdb,           {.v = NULL } },
-	{ 2,            setlayout,      {.v = &layouts[1]} },
 };
