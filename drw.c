@@ -142,8 +142,8 @@ xfont_create(Drw *drw, const char *fontname, FcPattern *fontpattern)
 	 */
 	//FcBool iscol;
 	//if(FcPatternGetBool(xfont->pattern, FC_COLOR, 0, &iscol) == FcResultMatch && iscol) {
-        //	XftFontClose(drw->dpy, xfont);
-	//      return NULL;
+	//	XftFontClose(drw->dpy, xfont);
+	//	return NULL;
 	//}
 
 	font = ecalloc(1, sizeof(Fnt));
