@@ -107,7 +107,7 @@ static Key keys[] = {
         { MODKEY|ShiftMask|ControlMask,	XK_o,	   spawn,	   SHCMD("idea") },
         { MODKEY,                       XK_r,      spawn,          SHCMD(TERMINAL " -e ranger") },
         { MODKEY|ShiftMask,             XK_r,      spawn,          SHCMD(TERMINAL " -e htop") },
-        { MODKEY,                       XK_o,      spawn,          SHCMD(TERMINAL " -e yay -Syyu") },
+        { MODKEY,                       XK_o,      spawn,          SHCMD(TERMINAL " -e yay -Syyu && pkill -RTMIN+8 \"${STATUSBAR:-dwmblocks}\"") },
         { MODKEY|ShiftMask,             XK_o,      spawn,          SHCMD(TERMINAL " -e ping 1.1.1.1") },
 
         { MODKEY|ShiftMask,             XK_b,      togglebar,      {0} },
@@ -123,10 +123,6 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,		XK_a,	   defaultgaps,	   {0} },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
 	{ MODKEY,                       XK_c,      killclient,     {0} },
-
-	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
-	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
-	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
 
 	{ MODKEY,                       XK_space,  zoom,           {0} },
 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
