@@ -35,11 +35,12 @@ static const Rule rules[] = {
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class      		instance    title       tags mask     isfloating   monitor */
-	{ "Gimp",     		NULL,       NULL,       0,            1,           -1 },
-	{ "Sxiv",     		"sxiv",     NULL,       0,            1,           -1 },
-	{ "Firefox",  		NULL,       NULL,       1 << 8,       0,           -1 },
-	{ "Tor Browser",	NULL,       NULL,       0,       	  1,           -1 },
+	/* class      		instance    title      			 tags mask     isfloating   monitor */
+	{ "Gimp",     		NULL,       NULL,      			 0,            1,           -1 },
+	{ "Sxiv",     		"sxiv",     NULL,      			 0,            1,           -1 },
+	{ "Firefox",  		NULL,       NULL,      			 1 << 8,       0,           -1 },
+	{ "Tor Browser",	NULL,       NULL,      			 0,       	   1,           -1 },
+	{ "mpv",			NULL,		NULL, 				 0,       	   1,           -1 },
 };
 
 /* layout(s) */
@@ -98,17 +99,20 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_p,      spawn,          SHCMD("dmenu-arch-wiki-searcher") },
 	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
 
-        { MODKEY,                       XK_w,      spawn,          SHCMD("$BROWSER") },
-        { MODKEY|ShiftMask,             XK_w,      spawn,          SHCMD("$BROWSER --profile ~/.mozilla/firefox/hz1axv5p.Normie") },
-        { MODKEY|ShiftMask,		XK_s,	   spawn,	   SHCMD("steam") },
-        { MODKEY|ShiftMask,		XK_d,	   spawn,	   SHCMD("discord") },
-        { MODKEY|ShiftMask|ControlMask,	XK_o,	   spawn,	   SHCMD("idea") },
-        { MODKEY,                       XK_r,      spawn,          SHCMD(TERMINAL " -e ranger") },
-        { MODKEY|ShiftMask,             XK_r,      spawn,          SHCMD(TERMINAL " -e htop") },
-        { MODKEY,                       XK_o,      spawn,          SHCMD(TERMINAL " -e yay -Syyu && pkill -RTMIN+8 \"${STATUSBAR:-dwmblocks}\"") },
-        { MODKEY|ShiftMask,             XK_o,      spawn,          SHCMD(TERMINAL " -e ping 1.1.1.1") },
+    { MODKEY,                       XK_w,      spawn,          SHCMD("$BROWSER") },
+    { MODKEY|ShiftMask,             XK_w,      spawn,          SHCMD("$BROWSER --profile ~/.mozilla/firefox/hz1axv5p.Normie") },
+    { MODKEY|ShiftMask,				XK_s,	   spawn,	   	   SHCMD("steam") },
+    { MODKEY|ShiftMask,				XK_d,	   spawn,	   	   SHCMD("discord") },
+    { MODKEY|ShiftMask|ControlMask,	XK_o,	   spawn,	   	   SHCMD("idea") },
+    { MODKEY,                       XK_r,      spawn,          SHCMD(TERMINAL " -e ranger") },
+    { MODKEY|ShiftMask,             XK_r,      spawn,          SHCMD(TERMINAL " -e htop") },
+    { MODKEY,             			XK_t,      spawn,          SHCMD("keepassxc") },
+    { MODKEY|ShiftMask,             XK_t,      spawn,          SHCMD("thinkorswim") },
+    { MODKEY|ShiftMask,            	XK_t,      spawn,          SHCMD("keepassxc") },
+    { MODKEY,                       XK_o,      spawn,          SHCMD(TERMINAL " -e yay -Syu && pkill -RTMIN+10 \"${STATUSBAR:-dwmblocks}\"") },
+    { MODKEY|ShiftMask,             XK_o,      spawn,          SHCMD(TERMINAL " -e ping 1.1.1.1") },
 
-        { MODKEY|ShiftMask,             XK_b,      togglebar,      {0} },
+    { MODKEY|ShiftMask,             XK_b,      togglebar,      {0} },
 	STACKKEYS(MODKEY,                          focus)
 	STACKKEYS(MODKEY|ShiftMask,                push)
 	{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
@@ -117,22 +121,22 @@ static Key keys[] = {
 	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
 	{ MODKEY,                       XK_z,      incrgaps,       {.i = +3 } },
 	{ MODKEY|ShiftMask,             XK_z,      incrgaps,       {.i = -3 } },
-	{ MODKEY,			XK_a,	   togglegaps,     {0} },
-	{ MODKEY|ShiftMask,		XK_a,	   defaultgaps,	   {0} },
+	{ MODKEY,						XK_a,	   togglegaps,     {0} },
+	{ MODKEY|ShiftMask,				XK_a,	   defaultgaps,	   {0} },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
 	{ MODKEY,                       XK_c,      killclient,     {0} },
 
 	{ MODKEY,                       XK_space,  zoom,           {0} },
 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
 	{ MODKEY,                       XK_f,      togglefullscr,  {0} },
-        { MODKEY,                       XK_s,      togglesticky,   {0} },
+    { MODKEY,                       XK_s,      togglesticky,   {0} },
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
 	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
 	{ MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },
 	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
-	{ MODKEY|ControlMask,		XK_comma,  cyclelayout,    {.i = -1 } },
+	{ MODKEY|ControlMask,			XK_comma,  cyclelayout,    {.i = -1 } },
 	{ MODKEY|ControlMask,           XK_period, cyclelayout,    {.i = +1 } },
 	{ MODKEY,                       XK_n,      shiftview,      {.i = +1 } },
 	{ MODKEY,                       XK_b,      shiftview,      {.i = -1 } },
@@ -146,20 +150,24 @@ static Key keys[] = {
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
 
-        { MODKEY,                       XK_F9,     spawn,          SHCMD("wall-d -p -f -d ~/Pictures/desktop-backgrounds") }, // Change wallpapers
-        { MODKEY|ShiftMask,             XK_F9,     spawn,          SHCMD("wall-d -p -f -o -d ~/Pictures/desktop-backgrounds") }, // Change wallpapers with options
-        { MODKEY,                       XK_F10,    spawn,          SHCMD("dmenu-config-dir") }, // Open config dirs
-        { MODKEY|ShiftMask,             XK_F10,    spawn,          SHCMD(TERMINAL " -e dmenu-picture-dir") }, // Open config dirs
-        { MODKEY,                       XK_F11,    spawn,          SHCMD("dmenu-mount") }, // Mount Drives
-        { MODKEY|ShiftMask,             XK_F11,    spawn,          SHCMD("dmenu-umount") }, // Unmount Drives
-        { MODKEY|ControlMask|ShiftMask, XK_F11,    spawn,          SHCMD("dmenu-unicode") }, // Copy unicode characters
-        { MODKEY,                       XK_F12,    spawn,          SHCMD(TERMINAL " -e pulsemixer") }, // Volume
-        { MODKEY,                       XK_Print,  spawn,          SHCMD("deepin-screenshot") }, // Screenshots
+    { MODKEY,                       XK_F9,     spawn,          SHCMD("wall-d -p -f -d ~/Pictures/desktop-backgrounds >/dev/null") }, // Change wallpapers
+    { MODKEY|ShiftMask,             XK_F9,     spawn,          SHCMD("wall-d -p -f -o -d ~/Pictures/desktop-backgrounds >/dev/null") }, // Change wallpapers with options
+    { MODKEY,                       XK_F10,    spawn,          SHCMD("dmenu-config-dir") }, // Open config dirs
+    { MODKEY|ShiftMask,             XK_F10,    spawn,          SHCMD(TERMINAL " -e dmenu-picture-dir") }, // Open config dirs
+    { MODKEY,                       XK_F11,    spawn,          SHCMD("dmenu-mount") }, // Mount Drives
+    { MODKEY|ShiftMask,             XK_F11,    spawn,          SHCMD("dmenu-umount") }, // Unmount Drives
+    { MODKEY|ControlMask|ShiftMask, XK_F11,    spawn,          SHCMD("dmenu-unicode") }, // Copy unicode characters
+    { MODKEY,                       XK_F12,    spawn,          SHCMD(TERMINAL " -e pulsemixer") }, // Volume
+    { MODKEY,                       XK_Print,  spawn,          SHCMD("deepin-screenshot") }, // Screenshots
+	{ MODKEY,						XK_minus,  spawn,		   SHCMD("pamixer --allow-boost -d 5; pkill -RTMIN+8 ${STATUSBAR:-dwmblocks} >/dev/null") },
+	{ MODKEY|ShiftMask,				XK_minus,  spawn,		   SHCMD("pamixer --allow-boost -d 15; pkill -RTMIN+8 ${STATUSBAR:-dwmblocks} >/dev/null") },
+	{ MODKEY,						XK_equal,  spawn,		   SHCMD("pamixer --allow-boost -i 5; pkill -RTMIN+8 ${STATUSBAR:-dwmblocks} >/dev/null") },
+	{ MODKEY|ShiftMask,				XK_equal,  spawn,		   SHCMD("pamixer --allow-boost -i 15; pkill -RTMIN+8 ${STATUSBAR:-dwmblocks} >/dev/null") },
 
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
 	{ MODKEY|ControlMask|ShiftMask, XK_q,      quit,           {1} }, 
-        { MODKEY,                       XK_Delete, spawn,          SHCMD("sudo poweroff") },
-        { MODKEY|ShiftMask,             XK_Delete, spawn,          SHCMD("sudo reboot") },
+    { MODKEY,                       XK_Delete, spawn,          SHCMD("sudo poweroff") },
+    { MODKEY|ShiftMask,             XK_Delete, spawn,          SHCMD("sudo reboot") },
 };
 
 /* button definitions */
