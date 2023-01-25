@@ -124,7 +124,7 @@ static Key keys[] = {
 	{ MODKEY,						XK_a,	   togglegaps,     {0} },
 	{ MODKEY|ShiftMask,				XK_a,	   defaultgaps,	   {0} },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
-	{ MODKEY,                       XK_c,      killclient,     {0} },
+	{ MODKEY|ShiftMask,             XK_c,      killclient,     {0} },
 
 	{ MODKEY,                       XK_space,  zoom,           {0} },
 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
