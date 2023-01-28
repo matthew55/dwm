@@ -215,6 +215,7 @@ static void grabkeys(void);
 static void incnmaster(const Arg *arg);
 static void keypress(XEvent *e);
 static int fake_signal(void);
+static void keepfloatingposition(Client *c);
 static void killclient(const Arg *arg);
 static void loadxrdb(void);
 static void manage(Window w, XWindowAttributes *wa);
@@ -1182,6 +1183,37 @@ fake_signal(void)
 	return 0;
 }
 
+static void
+keepfloatingposition(Client *c) {
+	Monitor *m;
+	int cmmx = c->mon->mx;
+	int cmmy = c->mon->my;
+	int cmmw = c->mon->mw;
+	int cmmh = c->mon->mh;
+	int mmx, mmy;
+	if(!(cmmx <= c->x &&
+			cmmx + cmmw - 1 >= c->x &&
+			cmmy <= c->y &&
+			cmmy + cmmh - 1 >= c->y))
+		for(m = mons; m; m = m->next) {
+			mmx = m->mx;
+			mmy = m->my;
+			if(mmx <= c->x &&
+					mmx + m->mw - 1 >= c->x &&
+					mmy <= c->y &&
+					mmy + m->mh - 1 >= c->y) {
+				c->x = c->x - mmx + cmmx;
+				c->y = c->y - mmy + cmmy;
+				if(c->x + c->w  + 2 * c->bw > cmmx + cmmw - 1)
+					c->x -= c->x + c->w + 2 * c->bw - cmmx - cmmw;
+				if(c->y + c->h + 2 * c->bw > cmmy + cmmh - 1)
+					c->y -= c->y + c->h + 2 * c->bw - cmmy - cmmh;
+				resizeclient(c, c->x, c->y, c->w, c->h);
+				break;
+			}
+		}
+}
+
 void
 killclient(const Arg *arg)
 {
@@ -1922,7 +1954,9 @@ showhide(Client *c)
 		/* show clients top down */
 		XMoveWindow(dpy, c->win, c->x, c->y);
 		if ((!c->mon->lt[c->mon->sellt]->arrange || c->isfloating) && !c->isfullscreen)
-			resize(c, c->x, c->y, c->w, c->h, 0);
+			if (c->isfloating)
+				keepfloatingposition(c);
+		resize(c, c->x, c->y, c->w, c->h, 0);
 		showhide(c->snext);
 	} else {
 		/* hide clients bottom up */
