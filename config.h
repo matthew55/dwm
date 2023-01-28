@@ -1,4 +1,5 @@
 /* See LICENSE file for copyright and license details. */
+#define SESSION_FILE "/tmp/dwm-session"
 
 #define TERMINAL "st"
 /* appearance */
