@@ -37,7 +37,7 @@ static const Rule rules[] = {
 	 */
 	/* class      		instance    title      			 tags mask     isfloating   monitor */
 	{ "Gimp",     		NULL,       NULL,      			 0,            1,           -1 },
-	{ "Sxiv",     		"sxiv",     NULL,      			 0,            1,           -1 },
+	{ "Nsxiv",     		"nsxiv",    NULL,      			 0,            1,           -1 },
 	{ "Firefox",  		NULL,       NULL,      			 1 << 8,       0,           -1 },
 	{ "Tor Browser",	NULL,       NULL,      			 0,       	   1,           -1 },
 	{ "mpv",			NULL,		NULL, 				 0,       	   1,           -1 },
@@ -55,27 +55,30 @@ static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen win
 static const Layout layouts[] = {
 	/* symbol     arrange function */
         /* first entry is default */
-	{ "[]=",	tile },			        /* Default: Master on left, slaves on right */
-	{ "[M]",	monocle },		        /* All windows on top of eachother */
-	{ "[@]",	spiral },		        /* Fibonacci spiral */
-	{ "[\\]",	dwindle },		        /* Decreasing in size right and leftward */
-	{ "H[]",	deck },			        /* Master on left, slaves in monocle-like mode on right */
-	{ "TTT",        bstack },		        /* Master on top, slaves on bottom */
-	{ "HHH",        gaplessgrid },                  /* Master on top left, slaves follow verticle grid */
-	{ "###",        nrowgrid },                     /* Same but horizontal grid */
-	{ "|M|",	centeredmaster },		/* Master in middle, slaves on sides */
-	{ ">M>",	centeredfloatingmaster },	/* Same but master floats */
-	{ "><>",      NULL },                           /* no layout function means floating behavior */
-	{ NULL,       NULL },                           /* Needed for cycling to work */
+	{ "[]=",	tile },			          /* Default: Master on left, slaves on right */
+	{ "[M]",	monocle },		          /* All windows on top of eachother */
+	{ "[@]",	spiral },		          /* Fibonacci spiral */
+	{ "[\\]",	dwindle },		          /* Decreasing in size right and leftward */
+	{ "H[]",	deck },			          /* Master on left, slaves in monocle-like mode on right */
+	{ "TTT",    bstack },		          /* Master on top, slaves on bottom */
+	{ "HHH",    gaplessgrid },            /* Master on top left, slaves follow verticle grid */
+	{ "###",    nrowgrid },               /* Same but horizontal grid */
+	{ "|M|",	centeredmaster },		  /* Master in middle, slaves on sides */
+	{ ">M>",	centeredfloatingmaster }, /* Same but master floats */
+	{ "><>",    NULL },                   /* no layout function means floating behavior */
+	{ NULL,     NULL },                   /* Needed for cycling to work */
 };
 
 /* key definitions */
 #define MODKEY Mod4Mask
+#define ALTMOD Mod1Mask
 #define TAGKEYS(KEY,TAG) \
 	{ MODKEY,                       KEY,      view,           {.ui = 1 << TAG} }, \
 	{ MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
 	{ MODKEY|ShiftMask,             KEY,      tag,            {.ui = 1 << TAG} }, \
-	{ MODKEY|ControlMask|ShiftMask, KEY,      toggletag,      {.ui = 1 << TAG} },
+	{ MODKEY|ControlMask|ShiftMask, KEY,      toggletag,      {.ui = 1 << TAG} }, \
+    { ALTMOD,                       KEY,      focusnthmon,    {.i  = TAG } }, \
+    { ALTMOD|ShiftMask,             KEY,      tagnthmon,      {.i  = TAG } },
 #define STACKKEYS(MOD,ACTION) \
 	{ MOD, XK_j,     ACTION##stack, {.i = INC(+1) } }, \
 	{ MOD, XK_k,     ACTION##stack, {.i = INC(-1) } }, \
