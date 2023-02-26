@@ -107,7 +107,8 @@ static Key keys[] = {
     { MODKEY|ShiftMask,				XK_s,	   spawn,	   	   SHCMD("steam") },
     { MODKEY|ShiftMask,				XK_d,	   spawn,	   	   SHCMD("discord") },
     { MODKEY|ShiftMask|ControlMask,	XK_o,	   spawn,	   	   SHCMD("idea") },
-    { MODKEY,                       XK_r,      spawn,          SHCMD(TERMINAL " -e ranger") },
+    { MODKEY,                       XK_e,      spawn,          SHCMD(TERMINAL " -e neomutt") },
+    { MODKEY,                       XK_r,      spawn,          SHCMD(TERMINAL " -e lfub") },
     { MODKEY|ShiftMask,             XK_r,      spawn,          SHCMD(TERMINAL " -e htop") },
     { MODKEY,             			XK_t,      spawn,          SHCMD("keepassxc") },
     { MODKEY|ShiftMask,             XK_t,      spawn,          SHCMD("thinkorswim") },
@@ -153,8 +154,8 @@ static Key keys[] = {
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
 
-    { MODKEY,                       XK_F9,     spawn,          SHCMD("wall-d -p -f -d ~/Pictures/desktop-backgrounds >/dev/null") }, // Change wallpapers
-    { MODKEY|ShiftMask,             XK_F9,     spawn,          SHCMD("wall-d -p -f -o -d ~/Pictures/desktop-backgrounds >/dev/null") }, // Change wallpapers with options
+    { MODKEY,                       XK_F9,     spawn,          SHCMD("wall-d -p -f -d ~/Pictures/desktop-backgrounds") }, // Change wallpapers
+    { MODKEY|ShiftMask,             XK_F9,     spawn,          SHCMD("wall-d -p -f -o -d ~/Pictures/desktop-backgrounds") }, // Change wallpapers with options
     { MODKEY,                       XK_F10,    spawn,          SHCMD("dmenu-config-dir") }, // Open config dirs
     { MODKEY|ShiftMask,             XK_F10,    spawn,          SHCMD(TERMINAL " -e dmenu-picture-dir") }, // Open config dirs
     { MODKEY,                       XK_F11,    spawn,          SHCMD("dmenu-mount") }, // Mount Drives
