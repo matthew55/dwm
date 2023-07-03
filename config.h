@@ -109,7 +109,7 @@ static const Key keys[] = {
     { MODKEY|ShiftMask,				XK_s,	   spawn,	   	   SHCMD("steam") },
     { MODKEY|ShiftMask,				XK_d,	   spawn,	   	   SHCMD("discord") },
     { MODKEY|ShiftMask|ControlMask,	XK_o,	   spawn,	   	   SHCMD("idea") },
-    { MODKEY,                       XK_e,      spawn,          SHCMD(TERMINAL " -e neomutt") },
+    { MODKEY,                       XK_e,      spawn,          SHCMD(TERMINAL " -e neomutt && pkill -RTMIN+11 \"${STATUSBAR:-dwmblocks}\"") },
     { MODKEY,                       XK_r,      spawn,          SHCMD(TERMINAL " -e lfub") },
     { MODKEY|ShiftMask,             XK_r,      spawn,          SHCMD(TERMINAL " -e htop") },
     { MODKEY,             			XK_t,      spawn,          SHCMD("keepassxc") },
@@ -156,15 +156,22 @@ static const Key keys[] = {
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
 
-    { MODKEY,                       XK_F9,     spawn,          SHCMD("wall-d -p -f -d ~/Pictures/desktop-backgrounds") }, // Change wallpapers
-    { MODKEY|ShiftMask,             XK_F9,     spawn,          SHCMD("wall-d -p -f -o -d ~/Pictures/desktop-backgrounds") }, // Change wallpapers with options
+    { MODKEY,                       XK_F9,     spawn,          SHCMD("wall-d -p -f -d $XDG_PICTURES_DIR/desktop-backgrounds") }, // Change wallpapers
+    { MODKEY|ShiftMask,             XK_F9,     spawn,          SHCMD("wall-d -p -f -o -d $XDG_PICTURES_DIR/desktop-backgrounds") }, // Change wallpapers with options
     { MODKEY,                       XK_F10,    spawn,          SHCMD("dmenu-config-dir") }, // Open config dirs
     { MODKEY|ShiftMask,             XK_F10,    spawn,          SHCMD(TERMINAL " -e dmenu-picture-dir") }, // Open config dirs
     { MODKEY,                       XK_F11,    spawn,          SHCMD("dmenu-mount") }, // Mount Drives
     { MODKEY|ShiftMask,             XK_F11,    spawn,          SHCMD("dmenu-umount") }, // Unmount Drives
     { MODKEY|ControlMask|ShiftMask, XK_F11,    spawn,          SHCMD("dmenu-unicode") }, // Copy unicode characters
     { MODKEY,                       XK_F12,    spawn,          SHCMD(TERMINAL " -e pulsemixer") }, // Volume
-    { MODKEY,                       XK_Print,  spawn,          SHCMD("deepin-screenshot") }, // Screenshots
+    { 0,                       		XK_Print,  spawn,          SHCMD("MAIM_IMAGE=\"$XDG_PICTURES_DIR/screenshots/$(date +%Y-%m-%dT%H:%M:%S).png\" && maim -sq \"$MAIM_IMAGE\" && notify-send -i \"$MAIM_IMAGE\" 'Maim Screenshots' \"Screenshot $MAIM_IMAGE saved!\"") }, // Screenshots
+    { MODKEY,                       XK_Print,  spawn,          SHCMD("MAIM_IMAGE=\"$XDG_PICTURES_DIR/screenshots/$(date +%Y-%m-%dT%H:%M:%S).png\" && maim -sq \"$MAIM_IMAGE\" && notify-send -i \"$MAIM_IMAGE\" 'Maim Screenshots' \"Screenshot $MAIM_IMAGE saved!\"") },
+    { MODKEY|ShiftMask,             XK_Print,  spawn,          SHCMD("MAIM_IMAGE=\"$XDG_PICTURES_DIR/screenshots/$(date +%Y-%m-%dT%H:%M:%S).png\" && maim -sq | tee \"$MAIM_IMAGE\" | xclip -selection clipboard -t image/png && notify-send -i \"$MAIM_IMAGE\" 'Maim Screenshots' \"Screenshot $MAIM_IMAGE saved and copied to clipboard!\"") },
+    { ShiftMask,             		XK_Print,  spawn,          SHCMD("MAIM_IMAGE=\"$XDG_PICTURES_DIR/screenshots/$(date +%Y-%m-%dT%H:%M:%S).png\" && maim -sq | tee \"$MAIM_IMAGE\" | xclip -selection clipboard -t image/png && notify-send -i \"$MAIM_IMAGE\" 'Maim Screenshots' \"Screenshot $MAIM_IMAGE saved and copied to clipboard!\"") },
+    { MODKEY|ControlMask,           XK_Print,  spawn,          SHCMD("MAIM_IMAGE=\"$XDG_PICTURES_DIR/screenshots/$(date +%Y-%m-%dT%H:%M:%S).png\" && maim -l -sq \"$MAIM_IMAGE\" && notify-send -i \"$MAIM_IMAGE\" 'Maim Screenshots' \"Screenshot $MAIM_IMAGE saved!\"") },
+    { ControlMask,           		XK_Print,  spawn,          SHCMD("MAIM_IMAGE=\"$XDG_PICTURES_DIR/screenshots/$(date +%Y-%m-%dT%H:%M:%S).png\" && maim -l -sq \"$MAIM_IMAGE\" && notify-send -i \"$MAIM_IMAGE\" 'Maim Screenshots' \"Screenshot $MAIM_IMAGE saved!\"") },
+    { MODKEY|ControlMask|ShiftMask, XK_Print,  spawn,          SHCMD("MAIM_IMAGE=\"$XDG_PICTURES_DIR/screenshots/$(date +%Y-%m-%dT%H:%M:%S).png\" && maim -l -sq | tee \"$MAIM_IMAGE\" | xclip -selection clipboard -t image/png && notify-send -i \"$MAIM_IMAGE\" 'Maim Screenshots' \"Screenshot $MAIM_IMAGE saved and copied to clipboard!\"") },
+    { ControlMask|ShiftMask, 		XK_Print,  spawn,          SHCMD("MAIM_IMAGE=\"$XDG_PICTURES_DIR/screenshots/$(date +%Y-%m-%dT%H:%M:%S).png\" && maim -l -sq | tee \"$MAIM_IMAGE\" | xclip -selection clipboard -t image/png && notify-send -i \"$MAIM_IMAGE\" 'Maim Screenshots' \"Screenshot $MAIM_IMAGE saved and copied to clipboard!\"") },
 	{ MODKEY,						XK_minus,  spawn,		   SHCMD("pamixer --allow-boost -d 5; pkill -RTMIN+8 ${STATUSBAR:-dwmblocks} >/dev/null") },
 	{ MODKEY|ShiftMask,				XK_minus,  spawn,		   SHCMD("pamixer --allow-boost -d 15; pkill -RTMIN+8 ${STATUSBAR:-dwmblocks} >/dev/null") },
 	{ MODKEY,						XK_equal,  spawn,		   SHCMD("pamixer --allow-boost -i 5; pkill -RTMIN+8 ${STATUSBAR:-dwmblocks} >/dev/null") },
