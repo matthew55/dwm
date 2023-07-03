@@ -1,5 +1,8 @@
 /* See LICENSE file for copyright and license details. */
 
+// Include extra buttons such as XF86AudioRaiseVolume and others.
+#include <X11/XF86keysym.h>
+
 #define TERMINAL "st"
 /* appearance */
 static const unsigned int borderpx    = 2;        /* border pixel of windows */
@@ -81,6 +84,7 @@ static const Layout layouts[] = {
 	{ MODKEY|ControlMask|ShiftMask, KEY,      toggletag,      {.ui = 1 << TAG} }, \
     { ALTMOD,                       KEY,      focusnthmon,    {.i  = TAG } }, \
     { ALTMOD|ShiftMask,             KEY,      tagnthmon,      {.i  = TAG } },
+
 #define STACKKEYS(MOD,ACTION) \
 	{ MOD, XK_j,     ACTION##stack, {.i = INC(+1) } }, \
 	{ MOD, XK_k,     ACTION##stack, {.i = INC(-1) } }, \
@@ -160,15 +164,16 @@ static const Key keys[] = {
     { MODKEY|ShiftMask,             XK_F9,     spawn,          SHCMD("wall-d -p -f -o -d ~/Pictures/desktop-backgrounds") }, // Change wallpapers with options
     { MODKEY,                       XK_F10,    spawn,          SHCMD("dmenu-config-dir") }, // Open config dirs
     { MODKEY|ShiftMask,             XK_F10,    spawn,          SHCMD(TERMINAL " -e dmenu-picture-dir") }, // Open config dirs
-    { MODKEY,                       XK_F11,    spawn,          SHCMD("dmenu-mount") }, // Mount Drives
-    { MODKEY|ShiftMask,             XK_F11,    spawn,          SHCMD("dmenu-umount") }, // Unmount Drives
-    { MODKEY|ControlMask|ShiftMask, XK_F11,    spawn,          SHCMD("dmenu-unicode") }, // Copy unicode characters
-    { MODKEY,                       XK_F12,    spawn,          SHCMD(TERMINAL " -e pulsemixer") }, // Volume
-    { MODKEY,                       XK_Print,  spawn,          SHCMD("deepin-screenshot") }, // Screenshots
-	{ MODKEY,						XK_minus,  spawn,		   SHCMD("pamixer --allow-boost -d 5; pkill -RTMIN+8 ${STATUSBAR:-dwmblocks} >/dev/null") },
-	{ MODKEY|ShiftMask,				XK_minus,  spawn,		   SHCMD("pamixer --allow-boost -d 15; pkill -RTMIN+8 ${STATUSBAR:-dwmblocks} >/dev/null") },
-	{ MODKEY,						XK_equal,  spawn,		   SHCMD("pamixer --allow-boost -i 5; pkill -RTMIN+8 ${STATUSBAR:-dwmblocks} >/dev/null") },
-	{ MODKEY|ShiftMask,				XK_equal,  spawn,		   SHCMD("pamixer --allow-boost -i 15; pkill -RTMIN+8 ${STATUSBAR:-dwmblocks} >/dev/null") },
+    { MODKEY,                       XF86XK_AudioLowerVolume,    spawn,          SHCMD("dmenu-mount") }, // Mount Drives
+    { MODKEY|ShiftMask,             XF86XK_AudioLowerVolume,    spawn,          SHCMD("dmenu-umount") }, // Unmount Drives
+    { MODKEY|ControlMask|ShiftMask, XF86XK_AudioLowerVolume,    spawn,          SHCMD("dmenu-unicode") }, // Copy unicode characters
+    { MODKEY,                       XF86XK_AudioRaiseVolume,    spawn, SHCMD(TERMINAL " -e pulsemixer") }, // Volume
+    { MODKEY,                       XK_Print,  spawn,          					SHCMD("deepin-screenshot") }, // Screenshots
+	{ 0	,							XF86XK_AudioMute,    		spawn,		    SHCMD("pamixer -t; pkill -RTMIN+8 ${STATUSBAR:-dwmblocks} >/dev/null") },
+	{ 0	,							XF86XK_AudioLowerVolume,    spawn,		    SHCMD("pamixer --allow-boost -d 5; pkill -RTMIN+8 ${STATUSBAR:-dwmblocks} >/dev/null") },
+	{ ShiftMask,				    XF86XK_AudioLowerVolume,    spawn,		    SHCMD("pamixer --allow-boost -d 15; pkill -RTMIN+8 ${STATUSBAR:-dwmblocks} >/dev/null") },
+	{ 0,							XF86XK_AudioRaiseVolume,    spawn,		    SHCMD("pamixer --allow-boost -i 5; pkill -RTMIN+8 ${STATUSBAR:-dwmblocks} >/dev/null") },
+	{ ShiftMask,					XF86XK_AudioRaiseVolume,    spawn,		   	SHCMD("pamixer --allow-boost -i 15; pkill -RTMIN+8 ${STATUSBAR:-dwmblocks} >/dev/null") },
 
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
 	{ MODKEY|ControlMask|ShiftMask, XK_q,      quit,           {1} }, 
