@@ -160,20 +160,20 @@ static const Key keys[] = {
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
 
-    { MODKEY,                       XK_F9,     spawn,          SHCMD("wall-d -p -f -d ~/Pictures/desktop-backgrounds") }, // Change wallpapers
-    { MODKEY|ShiftMask,             XK_F9,     spawn,          SHCMD("wall-d -p -f -o -d ~/Pictures/desktop-backgrounds") }, // Change wallpapers with options
-    { MODKEY,                       XK_F10,    spawn,          SHCMD("dmenu-config-dir") }, // Open config dirs
-    { MODKEY|ShiftMask,             XK_F10,    spawn,          SHCMD(TERMINAL " -e dmenu-picture-dir") }, // Open config dirs
-    { MODKEY,                       XF86XK_AudioLowerVolume,    spawn,          SHCMD("dmenu-mount") }, // Mount Drives
-    { MODKEY|ShiftMask,             XF86XK_AudioLowerVolume,    spawn,          SHCMD("dmenu-umount") }, // Unmount Drives
-    { MODKEY|ControlMask|ShiftMask, XF86XK_AudioLowerVolume,    spawn,          SHCMD("dmenu-unicode") }, // Copy unicode characters
-    { MODKEY,                       XF86XK_AudioRaiseVolume,    spawn, SHCMD(TERMINAL " -e pulsemixer") }, // Volume
-    { MODKEY,                       XK_Print,  spawn,          					SHCMD("deepin-screenshot") }, // Screenshots
-	{ 0	,							XF86XK_AudioMute,    		spawn,		    SHCMD("pamixer -t; pkill -RTMIN+8 ${STATUSBAR:-dwmblocks} >/dev/null") },
-	{ 0	,							XF86XK_AudioLowerVolume,    spawn,		    SHCMD("pamixer --allow-boost -d 5; pkill -RTMIN+8 ${STATUSBAR:-dwmblocks} >/dev/null") },
-	{ ShiftMask,				    XF86XK_AudioLowerVolume,    spawn,		    SHCMD("pamixer --allow-boost -d 15; pkill -RTMIN+8 ${STATUSBAR:-dwmblocks} >/dev/null") },
-	{ 0,							XF86XK_AudioRaiseVolume,    spawn,		    SHCMD("pamixer --allow-boost -i 5; pkill -RTMIN+8 ${STATUSBAR:-dwmblocks} >/dev/null") },
-	{ ShiftMask,					XF86XK_AudioRaiseVolume,    spawn,		   	SHCMD("pamixer --allow-boost -i 15; pkill -RTMIN+8 ${STATUSBAR:-dwmblocks} >/dev/null") },
+    { MODKEY,                       XF86XK_MonBrightnessDown,  spawn,          SHCMD("wall-d -p -f -d ~/Pictures/desktop-backgrounds") }, // Change wallpapers
+    { MODKEY|ShiftMask,             XF86XK_MonBrightnessDown,  spawn,          SHCMD("wall-d -p -f -o -d ~/Pictures/desktop-backgrounds") }, // Change wallpapers with options
+    { MODKEY,                       XF86XK_MonBrightnessUp,    spawn,          SHCMD("dmenu-config-dir") }, // Open config dirs
+    { MODKEY|ShiftMask,             XF86XK_MonBrightnessUp,    spawn,          SHCMD(TERMINAL " -e dmenu-picture-dir") }, // Open config dirs
+    { MODKEY,                       XF86XK_AudioLowerVolume,   spawn,          SHCMD("dmenu-mount") }, // Mount Drives
+    { MODKEY|ShiftMask,             XF86XK_AudioLowerVolume,   spawn,          SHCMD("dmenu-umount") }, // Unmount Drives
+    { MODKEY|ControlMask|ShiftMask, XF86XK_AudioLowerVolume,   spawn,          SHCMD("dmenu-unicode") }, // Copy unicode characters
+    { MODKEY,                       XF86XK_AudioRaiseVolume,   spawn, 		   SHCMD(TERMINAL " -e pulsemixer") }, // Volume
+    { MODKEY,                       XK_Print,  spawn,         				   SHCMD("deepin-screenshot") }, // Screenshots
+	{ 0	,							XF86XK_AudioMute,    	   spawn,		   SHCMD("pamixer -t; pkill -RTMIN+8 ${STATUSBAR:-dwmblocks} >/dev/null") },
+	{ 0	,							XF86XK_AudioLowerVolume,   spawn,		   SHCMD("pamixer --allow-boost -d 5; pkill -RTMIN+8 ${STATUSBAR:-dwmblocks} >/dev/null") },
+	{ ShiftMask,				    XF86XK_AudioLowerVolume,   spawn,		   SHCMD("pamixer --allow-boost -d 15; pkill -RTMIN+8 ${STATUSBAR:-dwmblocks} >/dev/null") },
+	{ 0,							XF86XK_AudioRaiseVolume,   spawn,		   SHCMD("pamixer --allow-boost -i 5; pkill -RTMIN+8 ${STATUSBAR:-dwmblocks} >/dev/null") },
+	{ ShiftMask,					XF86XK_AudioRaiseVolume,   spawn,		   SHCMD("pamixer --allow-boost -i 15; pkill -RTMIN+8 ${STATUSBAR:-dwmblocks} >/dev/null") },
 
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
 	{ MODKEY|ControlMask|ShiftMask, XK_q,      quit,           {1} }, 
