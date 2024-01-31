@@ -98,6 +98,8 @@ static const Layout layouts[] = {
 /* commands */
 static const char *termcmd[]  = { TERMINAL, NULL };
 
+#include <X11/XF86keysym.h>
+
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_p,      spawn,          SHCMD("dmenu_run") },
@@ -105,17 +107,19 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
 
     { MODKEY,                       XK_w,      spawn,          SHCMD("$BROWSER") },
-    { MODKEY|ShiftMask,             XK_w,      spawn,          SHCMD("$BROWSER --profile ~/.mozilla/firefox/hz1axv5p.Normie") },
+    { MODKEY|ShiftMask,             XK_w,      spawn,          SHCMD("$BROWSER --profile ~/.librewolf/cihrbns7.Normie") },
+    { MODKEY|ShiftMask|ControlMask, XK_w,      spawn,          SHCMD("$BROWSER --profile ~/.librewolf/cihrbns7.Normie --private-window") },
     { MODKEY|ShiftMask,				XK_s,	   spawn,	   	   SHCMD("steam") },
     { MODKEY|ShiftMask,				XK_d,	   spawn,	   	   SHCMD("discord") },
     { MODKEY|ShiftMask|ControlMask,	XK_o,	   spawn,	   	   SHCMD("idea") },
-    { MODKEY,                       XK_e,      spawn,          SHCMD(TERMINAL " -e neomutt && pkill -RTMIN+11 \"${STATUSBAR:-dwmblocks}\"") },
+    { MODKEY,                       XK_e,      spawn,          SHCMD(TERMINAL " -e neomutt; pkill -RTMIN+11 dwmblocks") },
     { MODKEY,                       XK_r,      spawn,          SHCMD(TERMINAL " -e lfub") },
     { MODKEY|ShiftMask,             XK_r,      spawn,          SHCMD(TERMINAL " -e htop") },
     { MODKEY,             			XK_t,      spawn,          SHCMD("keepassxc") },
     { MODKEY|ShiftMask,             XK_t,      spawn,          SHCMD("thinkorswim") },
     { MODKEY|ShiftMask,            	XK_t,      spawn,          SHCMD("keepassxc") },
-    { MODKEY,                       XK_o,      spawn,          SHCMD(TERMINAL " -e yay -Syu && pkill -RTMIN+10 \"${STATUSBAR:-dwmblocks}\"") },
+    { MODKEY,                       XK_u,      spawn,          SHCMD(TERMINAL " -e newsboat") },
+    { MODKEY,                       XK_o,      spawn,          SHCMD(TERMINAL " -e yay -Syu; pkill -RTMIN+10 dwmblocks") },
     { MODKEY|ShiftMask,             XK_o,      spawn,          SHCMD(TERMINAL " -e ping 1.1.1.1") },
 
     { MODKEY|ShiftMask,             XK_b,      togglebar,      {0} },
@@ -163,24 +167,52 @@ static const Key keys[] = {
     { MODKEY,                       XK_F11,    spawn,          SHCMD("dmenu-mount") }, // Mount Drives
     { MODKEY|ShiftMask,             XK_F11,    spawn,          SHCMD("dmenu-umount") }, // Unmount Drives
     { MODKEY|ControlMask|ShiftMask, XK_F11,    spawn,          SHCMD("dmenu-unicode") }, // Copy unicode characters
-    { MODKEY,                       XK_F12,    spawn,          SHCMD(TERMINAL " -e pulsemixer") }, // Volume
-    { 0,                       		XK_Print,  spawn,          SHCMD("MAIM_IMAGE=\"$XDG_PICTURES_DIR/screenshots/$(date +%Y-%m-%dT%H:%M:%S).png\" && maim -sq \"$MAIM_IMAGE\" && notify-send -i \"$MAIM_IMAGE\" 'Maim Screenshots' \"Screenshot $MAIM_IMAGE saved!\"") }, // Screenshots
-    { MODKEY,                       XK_Print,  spawn,          SHCMD("MAIM_IMAGE=\"$XDG_PICTURES_DIR/screenshots/$(date +%Y-%m-%dT%H:%M:%S).png\" && maim -sq \"$MAIM_IMAGE\" && notify-send -i \"$MAIM_IMAGE\" 'Maim Screenshots' \"Screenshot $MAIM_IMAGE saved!\"") },
-    { MODKEY|ShiftMask,             XK_Print,  spawn,          SHCMD("MAIM_IMAGE=\"$XDG_PICTURES_DIR/screenshots/$(date +%Y-%m-%dT%H:%M:%S).png\" && maim -sq | tee \"$MAIM_IMAGE\" | xclip -selection clipboard -t image/png && notify-send -i \"$MAIM_IMAGE\" 'Maim Screenshots' \"Screenshot $MAIM_IMAGE saved and copied to clipboard!\"") },
-    { ShiftMask,             		XK_Print,  spawn,          SHCMD("MAIM_IMAGE=\"$XDG_PICTURES_DIR/screenshots/$(date +%Y-%m-%dT%H:%M:%S).png\" && maim -sq | tee \"$MAIM_IMAGE\" | xclip -selection clipboard -t image/png && notify-send -i \"$MAIM_IMAGE\" 'Maim Screenshots' \"Screenshot $MAIM_IMAGE saved and copied to clipboard!\"") },
-    { MODKEY|ControlMask,           XK_Print,  spawn,          SHCMD("MAIM_IMAGE=\"$XDG_PICTURES_DIR/screenshots/$(date +%Y-%m-%dT%H:%M:%S).png\" && maim -l -sq \"$MAIM_IMAGE\" && notify-send -i \"$MAIM_IMAGE\" 'Maim Screenshots' \"Screenshot $MAIM_IMAGE saved!\"") },
-    { ControlMask,           		XK_Print,  spawn,          SHCMD("MAIM_IMAGE=\"$XDG_PICTURES_DIR/screenshots/$(date +%Y-%m-%dT%H:%M:%S).png\" && maim -l -sq \"$MAIM_IMAGE\" && notify-send -i \"$MAIM_IMAGE\" 'Maim Screenshots' \"Screenshot $MAIM_IMAGE saved!\"") },
-    { MODKEY|ControlMask|ShiftMask, XK_Print,  spawn,          SHCMD("MAIM_IMAGE=\"$XDG_PICTURES_DIR/screenshots/$(date +%Y-%m-%dT%H:%M:%S).png\" && maim -l -sq | tee \"$MAIM_IMAGE\" | xclip -selection clipboard -t image/png && notify-send -i \"$MAIM_IMAGE\" 'Maim Screenshots' \"Screenshot $MAIM_IMAGE saved and copied to clipboard!\"") },
-    { ControlMask|ShiftMask, 		XK_Print,  spawn,          SHCMD("MAIM_IMAGE=\"$XDG_PICTURES_DIR/screenshots/$(date +%Y-%m-%dT%H:%M:%S).png\" && maim -l -sq | tee \"$MAIM_IMAGE\" | xclip -selection clipboard -t image/png && notify-send -i \"$MAIM_IMAGE\" 'Maim Screenshots' \"Screenshot $MAIM_IMAGE saved and copied to clipboard!\"") },
-	{ MODKEY,						XK_minus,  spawn,		   SHCMD("pamixer --allow-boost -d 5; pkill -RTMIN+8 ${STATUSBAR:-dwmblocks} >/dev/null") },
-	{ MODKEY|ShiftMask,				XK_minus,  spawn,		   SHCMD("pamixer --allow-boost -d 15; pkill -RTMIN+8 ${STATUSBAR:-dwmblocks} >/dev/null") },
-	{ MODKEY,						XK_equal,  spawn,		   SHCMD("pamixer --allow-boost -i 5; pkill -RTMIN+8 ${STATUSBAR:-dwmblocks} >/dev/null") },
-	{ MODKEY|ShiftMask,				XK_equal,  spawn,		   SHCMD("pamixer --allow-boost -i 15; pkill -RTMIN+8 ${STATUSBAR:-dwmblocks} >/dev/null") },
+    { MODKEY,                       XK_F12,    spawn,          SHCMD(TERMINAL " -e pulsemixer; pkill -RTMIN+8 dwmblocks") }, // Volume
+    { 0,                       		XK_Print,  spawn,          SHCMD("maim -q -d 0.2 \"$XDG_PICTURES_DIR/screenshots/$(date '+%Y-%m-%d_%H:%M:%S').png\"; notify-send 'Maim Screenshots' 'Screenshot saved!'") }, // Screenshots
+    { MODKEY,                       XK_Print,  spawn,          SHCMD("dmenu-maim") },
+    { MODKEY|ShiftMask,             XK_Print,  spawn,          SHCMD("daytrade-screenshot") },
+	{ MODKEY,						XK_minus,  spawn,		   SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-; pkill -RTMIN+8 dwmblocks") },
+	{ MODKEY|ShiftMask,				XK_minus,  spawn,		   SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 15%-; pkill -RTMIN+8 dwmblocks") },
+	{ MODKEY,						XK_equal,  spawn,		   SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+; pkill -RTMIN+8 dwmblocks") },
+	{ MODKEY|ShiftMask,				XK_equal,  spawn,		   SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 15%+; pkill -RTMIN+8 dwmblocks") },
+	{ MODKEY,				  XK_Scroll_Lock,  spawn,		   SHCMD("killall screenkey || screenkey &") },
+	{ MODKEY,						XK_F6,	   spawn,		   SHCMD("mpv --untimed --no-cache --no-osc --no-input-default-bindings --profile=low-latency --input-conf=/dev/null --title=webcam --autofit=100%x480 --demuxer-lavf-o-set=input_format=mjpeg $(ls /dev/video[0,2,4,6,8] | tail -n 2)") },
+	/*{ MODKEY,						XK_F6,	   spawn,		   SHCMD("mpv --untimed --no-cache --no-osc --no-input-default-bindings --profile=low-latency --input-conf=/dev/null --title=webcam --autofit=100%x480 $(ls /dev/video[0,2,4,6,8] | tail -n 1)") }, */
 
-	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
-	{ MODKEY|ControlMask|ShiftMask, XK_q,      quit,           {1} }, 
-    { MODKEY,                       XK_Delete, spawn,          SHCMD("sudo poweroff") },
-    { MODKEY|ShiftMask,             XK_Delete, spawn,          SHCMD("sudo reboot") },
+	{ MODKEY|ShiftMask,             XK_q,      quit,          {0} },
+	{ MODKEY|ControlMask|ShiftMask, XK_q,      quit,          {1} }, 
+    { MODKEY,             			XK_Delete, spawn,         SHCMD("dmenu-system") },
+    { MODKEY|ShiftMask,             XK_Delete, spawn,         SHCMD("reboot") },
+    { MODKEY|ControlMask|ShiftMask, XK_Delete, spawn,         SHCMD("poweroff") },
+
+	{ 0,	XF86XK_AudioMute,		 		   spawn,		   SHCMD("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle; pkill -RTMIN+8 dwmblocks") },
+	{ 0,	XF86XK_AudioRaiseVolume, 		   spawn,		   SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 0%- && wpctl set-volume @DEFAULT_AUDIO_SINK@ 3%+; pkill -RTMIN+8 dwmblocks") },
+	{ 0,	XF86XK_AudioLowerVolume, 		   spawn,		   SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 0%+ && wpctl set-volume @DEFAULT_AUDIO_SINK@ 3%-; pkill -RTMIN+8 dwmblocks") },
+	{ 0, XF86XK_AudioPrev,		 			   spawn,		   {.v = (const char*[]){ "mpc", "prev", NULL } } },
+	{ 0, XF86XK_AudioNext,		 			   spawn,		   {.v = (const char*[]){ "mpc",  "next", NULL } } },
+	{ 0, XF86XK_AudioPause,		 			   spawn,		   {.v = (const char*[]){ "mpc", "pause", NULL } } },
+	{ 0, XF86XK_AudioPlay,		 			   spawn,		   {.v = (const char*[]){ "mpc", "play", NULL } } },
+	{ 0, XF86XK_AudioStop,		 			   spawn,		   {.v = (const char*[]){ "mpc", "stop", NULL } } },
+	{ 0, XF86XK_AudioRewind,		       	   spawn,		   {.v = (const char*[]){ "mpc", "seek", "-10", NULL } } },
+	{ 0, XF86XK_AudioForward,	       		   spawn,		   {.v = (const char*[]){ "mpc", "seek", "+10", NULL } } },
+	{ 0, XF86XK_AudioMedia,		 	      	   spawn,		   {.v = (const char*[]){ TERMINAL, "-e", "ncmpcpp", NULL } } },
+	{ 0, XF86XK_AudioMicMute,	       		   spawn,		   SHCMD("pactl set-source-mute @DEFAULT_SOURCE@ toggle") },
+	/* { 0, XF86XK_PowerOff,				   spawn,		   {.v = (const char*[]){ "sysact", NULL } } }, */
+	{ 0, XF86XK_Calculator,					   spawn,		   {.v = (const char*[]){ TERMINAL, "-e", "bc", "-l", NULL } } },
+	{ 0, XF86XK_Sleep,						   spawn,		   {.v = (const char*[]){ "sudo", "-A", "zzz", NULL } } },
+	{ 0, XF86XK_WWW,						   spawn,		   SHCMD("$BROWSER") },
+	{ 0, XF86XK_DOS,						   spawn,		   {.v = termcmd } },
+	{ 0, XF86XK_ScreenSaver,				   spawn,		   SHCMD("slock & xset dpms force off; mpc pause; pauseallmpv") },
+	{ 0, XF86XK_TaskPane,					   spawn,		   {.v = (const char*[]){ TERMINAL, "-e", "htop", NULL } } },
+	{ 0, XF86XK_Mail,						   spawn,		   SHCMD(TERMINAL " -e neomutt ; pkill -RTMIN+11 dwmblocks") },
+	{ 0, XF86XK_MyComputer,					   spawn,		   {.v = (const char*[]){ TERMINAL, "-e",  "lfub",  "/", NULL } } },
+	/* { 0, XF86XK_Battery,					   spawn,		   SHCMD("") }, */
+	{ 0, XF86XK_Launch1,					   spawn,		   {.v = (const char*[]){ "xset", "dpms", "force", "off", NULL } } },
+	{ 0, XF86XK_TouchpadToggle,				   spawn,		   SHCMD("(synclient | grep 'TouchpadOff.*1' && synclient TouchpadOff=0) || synclient TouchpadOff=1") },
+	{ 0, XF86XK_TouchpadOff,				   spawn,		   {.v = (const char*[]){ "synclient", "TouchpadOff=1", NULL } } },
+	{ 0, XF86XK_TouchpadOn,					   spawn,		   {.v = (const char*[]){ "synclient", "TouchpadOff=0", NULL } } },
+	{ 0, XF86XK_MonBrightnessUp,			   spawn,		   {.v = (const char*[]){ "xbacklight", "-inc", "15", NULL } } },
+	{ 0, XF86XK_MonBrightnessDown,			   spawn,		   {.v = (const char*[]){ "xbacklight", "-dec", "15", NULL } } },
 };
 
 /* button definitions */
@@ -194,7 +226,7 @@ static const Button buttons[] = {
 	{ ClkStatusText,        0,              Button4,        sigdwmblocks,   {.i = 4} },
 	{ ClkStatusText,        0,              Button5,        sigdwmblocks,   {.i = 5} },
 	{ ClkStatusText,        ShiftMask,      Button1,        sigdwmblocks,   {.i = 6} },
-	{ ClkStatusText,        ShiftMask,      Button3,        spawn,          SHCMD(TERMINAL " -e vim ~/.config/dwmblocks/config.h") },
+	{ ClkStatusText,        ShiftMask,      Button3,        spawn,          SHCMD(TERMINAL " -e nvim ~/.local/src/dwmblocks/config.h") },
 	{ ClkLtSymbol,          0,              Button1,        setlayout,      {0} },
 	{ ClkLtSymbol,          0,              Button3,        setlayout,      {.v = &layouts[2]} },
 	{ ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
