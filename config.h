@@ -134,6 +134,7 @@ static const Key keys[] = {
 	{ MODKEY,						XK_a,	   togglegaps,     {0} },
 	{ MODKEY|ShiftMask,				XK_a,	   defaultgaps,	   {0} },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
+	{ ALTMOD,                       XK_Tab,    view,           {0} },
 	{ MODKEY|ShiftMask,             XK_c,      killclient,     {0} },
 
 	{ MODKEY,                       XK_space,  zoom,           {0} },
